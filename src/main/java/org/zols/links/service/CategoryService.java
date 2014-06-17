@@ -7,11 +7,16 @@ package org.zols.links.service;
 
 import org.jodel.store.DataStore;
 import org.jodel.store.mongo.MongoDataStore;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.zols.links.domain.Category;
 
 @Service
 public class CategoryService {
+
+    private static final Logger LOGGER = LoggerFactory
+            .getLogger(CategoryService.class);
 
     public final DataStore dataStore;
 
@@ -26,7 +31,11 @@ public class CategoryService {
      * @return created Category object
      */
     public Category create(Category category) {
-        return dataStore.create(Category.class, category);
+        LOGGER.debug("Creating Category ", category.getName());
+        Category createdCategory ;
+        createdCategory = dataStore.create(Category.class, category);
+        LOGGER.debug("Created Category ", createdCategory.getName());
+        return createdCategory;
     }
 
     /**
