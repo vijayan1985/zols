@@ -1,6 +1,6 @@
 package org.zols.links.domain;
 
-import org.jodel.store.stereotype.Id;
+import javax.persistence.Id;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
