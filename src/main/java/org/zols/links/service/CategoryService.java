@@ -30,11 +30,10 @@ public class CategoryService {
      * @param category Object to be Create
      * @return created Category object
      */
-    public Category create(Category category) {
-        LOGGER.debug("Creating Category ", category.getName());
+    public Category create(Category category) {        
         Category createdCategory ;
         createdCategory = dataStore.create(Category.class, category);
-        LOGGER.debug("Created Category ", createdCategory.getName());
+        LOGGER.info("Created Category ", createdCategory.getName());
         return createdCategory;
     }
 
