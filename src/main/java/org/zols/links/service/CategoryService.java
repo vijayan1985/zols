@@ -33,7 +33,7 @@ public class CategoryService {
     public Category create(Category category) {        
         Category createdCategory ;
         createdCategory = dataStore.create(Category.class, category);
-        LOGGER.info("Created Category ", createdCategory.getName());
+        LOGGER.info("Created Category {}", createdCategory.getName());
         return createdCategory;
     }
 

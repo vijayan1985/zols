@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,10 +18,12 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 import org.zols.links.domain.Category;
 import org.zols.links.service.CategoryService;
 
-@Controller
+@RestController
+@RequestMapping(value="/api/link_categories")
 public class CategoryController {
 
     private static final Logger LOGGER = LoggerFactory
@@ -31,15 +32,13 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;    
 
-    @RequestMapping(value = "/api/link_categories", method = POST)
-    @ResponseBody
+    @RequestMapping(method = POST)    
     public Category create(@RequestBody Category category) {
         LOGGER.info("Creating new categories {}", category);
         return categoryService.create(category);
     }
 
-    @RequestMapping(value = "/api/link_categories/{name}", method = GET)
-    @ResponseBody
+    @RequestMapping(value = "/api/link_categories/{name}", method = GET)    
     public Category read(@PathVariable(value = "name") String name) {
         LOGGER.info("Getting category ", name);
         return categoryService.read(name);
