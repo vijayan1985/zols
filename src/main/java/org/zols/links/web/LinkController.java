@@ -17,7 +17,7 @@ import org.zols.links.domain.Category;
 public class LinkController {
 
     private static final Logger LOGGER = LoggerFactory
-            .getLogger(CategoryController.class);
+            .getLogger(LinkController.class);
 
     @RequestMapping(method = GET)
     public Category read() {

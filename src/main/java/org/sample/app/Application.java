@@ -1,11 +1,13 @@
-package org.zols;
+package org.sample.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
+import org.zols.plugin.EnableCMS;
 
 @ComponentScan
 @EnableAutoConfiguration
+@EnableCMS
 public class Application {
     
     public static void main(String[] args) {
