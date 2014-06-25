@@ -1,6 +1,6 @@
 package org.sample.app;
 
-import org.springframework.boot.SpringApplication;
+import static org.springframework.boot.SpringApplication.run;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.zols.plugin.EnableCMS;
@@ -11,6 +11,6 @@ import org.zols.plugin.EnableCMS;
 public class Application {
     
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        run(Application.class, args);
     }
 }

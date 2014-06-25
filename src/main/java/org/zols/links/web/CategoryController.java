@@ -6,7 +6,7 @@
 package org.zols.links.web;
 
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.slf4j.LoggerFactory.getLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,8 +25,7 @@ import org.zols.links.service.CategoryService;
 @RequestMapping(value="/api/link_categories")
 public class CategoryController {
 
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(CategoryController.class);
+    private static final Logger LOGGER = getLogger(CategoryController.class);
     
     @Autowired
     private CategoryService categoryService;    

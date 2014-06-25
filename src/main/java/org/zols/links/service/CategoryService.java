@@ -6,23 +6,19 @@
 package org.zols.links.service;
 
 import org.jodel.store.DataStore;
-import org.jodel.store.mongo.MongoDataStore;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.slf4j.LoggerFactory.getLogger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zols.links.domain.Category;
 
 @Service
 public class CategoryService {
 
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(CategoryService.class);
+    private static final Logger LOGGER = getLogger(CategoryService.class);
 
-    public final DataStore dataStore;
-
-    public CategoryService() {
-        this.dataStore = new MongoDataStore();
-    }
+    @Autowired
+    public DataStore dataStore;
 
     /**
      * Creates a new Category with given Object
@@ -30,10 +26,12 @@ public class CategoryService {
      * @param category Object to be Create
      * @return created Category object
      */
-    public Category create(Category category) {        
-        Category createdCategory ;
-        createdCategory = dataStore.create(Category.class, category);
-        LOGGER.info("Created Category {}", createdCategory.getName());
+    public Category create(Category category) {
+        Category createdCategory = null;
+        if (category != null) {
+            createdCategory = dataStore.create(Category.class, category);
+            LOGGER.info("Created Category {}", createdCategory.getName());
+        }
         return createdCategory;
     }
 
@@ -44,8 +42,8 @@ public class CategoryService {
      * @return searched Category
      */
     public Category read(String categoryName) {
+        LOGGER.info("Reading Category {}", categoryName);
         return dataStore.read(Category.class, categoryName);
-
     }
 
     /**
@@ -55,7 +53,12 @@ public class CategoryService {
      * @return
      */
     public Boolean update(Category category) {
-        return dataStore.update(category);
+        Boolean updated = false;
+        if (category != null) {
+            LOGGER.info("Updating Category {}", category);
+            updated = dataStore.update(category);
+        }
+        return updated;
     }
 
     /**
@@ -65,6 +68,7 @@ public class CategoryService {
      * @return
      */
     public Boolean delete(String categoryName) {
+        LOGGER.info("deleting Category {}", categoryName);
         return dataStore.delete(Category.class, categoryName);
     }
 

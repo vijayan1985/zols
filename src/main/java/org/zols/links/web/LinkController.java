@@ -6,7 +6,7 @@
 package org.zols.links.web;
 
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.slf4j.LoggerFactory.getLogger;
 import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,8 +16,7 @@ import org.zols.links.domain.Category;
 @RequestMapping(value = "/api/links")
 public class LinkController {
 
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(LinkController.class);
+    private static final Logger LOGGER = getLogger(LinkController.class);
 
     @RequestMapping(method = GET)
     public Category read() {
