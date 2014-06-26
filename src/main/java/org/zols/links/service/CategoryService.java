@@ -5,12 +5,18 @@
  */
 package org.zols.links.service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.jodel.store.DataStore;
 import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.zols.links.domain.Category;
+import org.zols.links.domain.Link;
+import org.zols.links.provider.LinkProvider;
 
 @Service
 public class CategoryService {
@@ -18,7 +24,13 @@ public class CategoryService {
     private static final Logger LOGGER = getLogger(CategoryService.class);
 
     @Autowired
-    public DataStore dataStore;
+    private DataStore dataStore;
+
+    @Autowired
+    private LinkService linkService;
+
+    @Autowired
+    private ApplicationContext applicationContext;
 
     /**
      * Creates a new Category with given Object
@@ -68,8 +80,49 @@ public class CategoryService {
      * @return
      */
     public Boolean delete(String categoryName) {
-        LOGGER.info("deleting Category {}", categoryName);
+        LOGGER.info("Deleting Category {}", categoryName);
+        List<Link> linksUnderCategory = linkService.getFirstLevelLinks(categoryName);
+        for (Link link : linksUnderCategory) {
+            delete(link.getName());
+        }
         return dataStore.delete(Category.class, categoryName);
+    }
+
+    public List<Category> getCategories() {
+        return dataStore.list(Category.class);
+    }
+
+    public Map<String, List<Link>> getApplicationLinks() {
+        Map<String, List<Link>> applicationLinks = new HashMap<>();
+        List<Category> categories = getCategories();
+        if (categories != null) {
+            List<Link> firstlevelLinks;
+            for (Category category : categories) {
+                firstlevelLinks = linkService.getFirstLevelLinks(category.getName());
+                walkLinkTree(firstlevelLinks);
+                applicationLinks.put(category.getName(), firstlevelLinks);
+            }
+        }
+
+        Map<String, LinkProvider> beansMap = applicationContext.getBeansOfType(LinkProvider.class);
+
+        for (Map.Entry<String, LinkProvider> entry : beansMap.entrySet()) {
+            applicationLinks.put(entry.getKey(), entry.getValue().getLinks());
+        }
+
+        return applicationLinks;
+    }
+
+    private void walkLinkTree(List<Link> links) {
+        for (Link link : links) {
+            //Assign Default Url
+            if (link.getTargetUrl() == null || link.getTargetUrl().trim().length() == 0) {
+                link.setTargetUrl("/pages/add?link=" + link.getName());
+            }
+            List<Link> childLinks = linkService.getChildern(link.getName());
+            link.setChildren(childLinks);
+            walkLinkTree(childLinks);
+        }
     }
 
 }
