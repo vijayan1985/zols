@@ -26,44 +26,40 @@ public class CategoryServiceTest {
 
     @Autowired
     private CategoryService categoryService;
+    
+    private Category category;
 
     /**
      * Test of create method, of class CategoryService.
      */
     @Test
     public void testCreate() {
-        Category category = new Category();
-        category.setDescription("Description");
-        Category createdCategory = categoryService.create(category);
-        Category readCategory = categoryService.read(createdCategory.getName());
+        Category readCategory = categoryService.read(category.getName());
         assertThat("Created Category ", (readCategory != null));
     }
 
     @Test
     public void testUpdate() {
-        Category category = new Category();
-        category.setDescription("Description");
-        Category createdCategory = categoryService.create(category);        
-        createdCategory.setDescription("Description2");        
-        categoryService.update(createdCategory);        
-        Category readCategory = categoryService.read(createdCategory.getName());        
-        assertThat("Updated Category ", readCategory.getDescription(),equalTo("Description2"));
+        Category readCategory = categoryService.read(category.getName());
+        readCategory.setDescription("Description2");
+        categoryService.update(readCategory);
+        Category updatedCategory = categoryService.read(readCategory.getName());
+        assertThat("Updated Category ", updatedCategory.getDescription(), equalTo("Description2"));
     }
 
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
 
     @Before
     public void setUp() {
+        category = new Category();
+        category.setName("header");
+        category.setLabel("Header");
+        category.setDescription("Description");
+        categoryService.create(category);
     }
 
     @After
-    public void tearDown() {
+    public void after() {
+        categoryService.delete(category.getName());
     }
 
 }

@@ -13,12 +13,10 @@ import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
 import static org.jodel.store.query.Filter.Operator.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.zols.links.domain.Link;
 
-/**
- *
- * @author sathish_ku
- */
+@Service
 public class LinkService {
 
     private static final Logger LOGGER = getLogger(LinkService.class);
