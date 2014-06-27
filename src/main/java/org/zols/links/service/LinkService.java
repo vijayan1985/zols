@@ -76,19 +76,7 @@ public class LinkService {
         return dataStore.delete(Link.class, linkName);
     }
 
-    /**
-     * Get the list of first level links with given category name
-     *
-     * @param categoryName Object to be search
-     * @return list of links
-     */
-    public List<Link> getFirstLevelLinks(String categoryName) {
-        LOGGER.info("Getting first level links of category {}", categoryName);
-        Query query = new Query();
-        query.addFilter(new Filter<>("categoryName", EQUALS, categoryName));
-        query.addFilter(new Filter<>("parentLinkName", IS_NULL, categoryName));
-        return dataStore.list(Link.class, query);
-    }
+    
 
     /**
      * Get the list of link with given Parent name
@@ -101,6 +89,10 @@ public class LinkService {
         Query query = new Query();
         query.addFilter(new Filter<>("parentLinkName", EQUALS, parentLinkName));
         return dataStore.list(Link.class, query);
+    }
+
+    public List<Link> list() {
+        return dataStore.list(Link.class);
     }
 
 }

@@ -42,10 +42,7 @@ public class Link {
      */
     private String iconUrl;
 
-    /**
-     * children of the link.
-     */
-    private List<Link> children;
+
     
     /**
      * category of the link.
@@ -100,13 +97,6 @@ public class Link {
         this.iconUrl = iconUrl;
     }
 
-    public List<Link> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<Link> children) {
-        this.children = children;
-    }
 
     public String getCategoryName() {
         return categoryName;

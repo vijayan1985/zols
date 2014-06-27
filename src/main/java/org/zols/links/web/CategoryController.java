@@ -5,6 +5,7 @@
  */
 package org.zols.links.web;
 
+import java.util.List;
 import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.zols.links.domain.Category;
+import org.zols.links.domain.Link;
 import org.zols.links.service.CategoryService;
 
 @RestController
@@ -36,26 +38,38 @@ public class CategoryController {
         return categoryService.create(category);
     }
 
-    @RequestMapping(value = "/api/link_categories/{name}", method = GET)    
+    @RequestMapping(value = "/{name}", method = GET)    
     public Category read(@PathVariable(value = "name") String name) {
         LOGGER.info("Getting category ", name);
         return categoryService.read(name);
     }
 
-    @RequestMapping(value = "/api/link_categories/{name}", method = PUT)
+    @RequestMapping(value = "/{name}", method = PUT)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void update(@PathVariable(value = "name") String name,
-            @RequestBody Category category) {
-        LOGGER.info("Updating categories with id {} with {}", name, category);
+            @RequestBody Category category) {        
         if (name.equals(category.getName())) {
+            LOGGER.info("Updating categories with id {} with {}", name, category);
             categoryService.update(category);
         }
     }
 
-    @RequestMapping(value = "/api/link_categories/{name}", method = DELETE)
+    @RequestMapping(value = "/{name}", method = DELETE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable(value = "name") String name) {
         LOGGER.info("Deleting categories with id {}", name);
         categoryService.delete(name);
+    }
+    
+    @RequestMapping(method = GET)    
+    public List<Category> list() {
+        LOGGER.info("Getting categories ");
+        return categoryService.list();
+    }
+    
+    @RequestMapping(value = "/{name}/first_level_links", method = GET)    
+    public List<Link> listFirstLevelLinks(@PathVariable(value = "name") String name) {
+        LOGGER.info("Getting first level links of category {} ",name);
+        return categoryService.getFirstLevelLinks(name);
     }
 }
