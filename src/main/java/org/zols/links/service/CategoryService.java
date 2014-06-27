@@ -106,7 +106,7 @@ public class CategoryService {
         LOGGER.info("Getting first level links of category {}", categoryName);
         Query query = new Query();
         query.addFilter(new Filter<>("categoryName", EQUALS, categoryName));
-        query.addFilter(new Filter<>("parentLinkName", IS_NULL, categoryName));
+        query.addFilter(new Filter<>("parentLinkName", IS_NULL));
         return dataStore.list(Link.class, query);
     }
 

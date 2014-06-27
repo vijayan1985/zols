@@ -33,7 +33,7 @@ public class LinkController {
 
     @RequestMapping(method = POST)    
     public Link create(@RequestBody Link link) {
-        LOGGER.info("Creating new links {}", link);
+        LOGGER.info("Creating new links {}", link.getName());
         return linkService.create(link);
     }
 

@@ -40,7 +40,7 @@
     </dependencies>
 
     <properties>
-        <start-class>org.zols.Application</start-class>
+        <start-class>org.sample.app.Application</start-class>
         <java.version>1.7</java.version>
     </properties>
 
