@@ -5,6 +5,7 @@
  */
 package org.zols.links.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 import javax.persistence.Id;
 
@@ -12,6 +13,7 @@ import javax.persistence.Id;
  *
  * @author sathish_ku
  */
+@JsonIgnoreProperties({"children"})
 public class Link {
 
     @Id
@@ -42,8 +44,11 @@ public class Link {
      */
     private String iconUrl;
 
+    /**
+     * Childern of Link
+     */
+    private List<Link> children;
 
-    
     /**
      * category of the link.
      */
@@ -97,7 +102,6 @@ public class Link {
         this.iconUrl = iconUrl;
     }
 
-
     public String getCategoryName() {
         return categoryName;
     }
@@ -105,6 +109,13 @@ public class Link {
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
-    
-    
+
+    public List<Link> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Link> children) {
+        this.children = children;
+    }
+
 }

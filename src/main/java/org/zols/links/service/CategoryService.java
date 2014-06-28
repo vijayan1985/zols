@@ -137,8 +137,8 @@ public class CategoryService {
             if (link.getTargetUrl() == null || link.getTargetUrl().trim().length() == 0) {
                 link.setTargetUrl("/pages/add?link=" + link.getName());
             }
-            List<Link> childLinks = linkService.getChildern(link.getName());
-            //link.setChildren(childLinks);
+            List<Link> childLinks = linkService.listChildren(link.getName());
+            link.setChildren(childLinks);
             walkLinkTree(childLinks);
         }
     }

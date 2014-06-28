@@ -84,7 +84,7 @@ public class LinkService {
      * @param parentLinkName String to be search
      * @return list of links
      */
-    public List<Link> getChildern(String parentLinkName) {
+    public List<Link> listChildren(String parentLinkName) {
         LOGGER.info("Getting children of link {}", parentLinkName);
         Query query = new Query();
         query.addFilter(new Filter<>("parentLinkName", EQUALS, parentLinkName));
@@ -92,7 +92,10 @@ public class LinkService {
     }
 
     public List<Link> list() {
+        LOGGER.info("Getting Links ");
         return dataStore.list(Link.class);
     }
+
+  
 
 }

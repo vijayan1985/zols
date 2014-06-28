@@ -3,7 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.zols.links.web;
+
+package org.zols.templates.web;
 
 import java.util.List;
 import org.slf4j.Logger;
@@ -19,56 +20,53 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.zols.links.domain.Link;
-import org.zols.links.service.LinkService;
+import org.zols.templates.domain.Template;
+import org.zols.templates.service.TemplateService;
 
+/**
+ *
+ * @author sathish_ku
+ */
 @RestController
-@RequestMapping(value = "/api/links")
-public class LinkController {
+@RequestMapping(value = "/api/templates")
+public class TemplateControler {
+    private static final Logger LOGGER = getLogger(TemplateControler.class);
 
-    private static final Logger LOGGER = getLogger(LinkController.class);
-    
     @Autowired
-    private LinkService linkService;    
+    private TemplateService templateService;
 
-    @RequestMapping(method = POST)    
-    public Link create(@RequestBody Link link) {
-        LOGGER.info("Creating new links {}", link.getName());
-        return linkService.create(link);
+    @RequestMapping(method = POST)
+    public Template create(@RequestBody Template template) {
+        LOGGER.info("Creating new templates {}", template.getName());
+        return templateService.create(template);
     }
 
-    @RequestMapping(value = "/{name}", method = GET)    
-    public Link read(@PathVariable(value = "name") String name) {
-        LOGGER.info("Getting link ", name);
-        return linkService.read(name);
+    @RequestMapping(value = "/{name}", method = GET)
+    public Template read(@PathVariable(value = "name") String name) {
+        LOGGER.info("Getting template ", name);
+        return templateService.read(name);
     }
 
     @RequestMapping(value = "/{name}", method = PUT)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void update(@PathVariable(value = "name") String name,
-            @RequestBody Link link) {        
-        if (name.equals(link.getName())) {
-            LOGGER.info("Updating links with id {} with {}", name, link);
-            linkService.update(link);
+            @RequestBody Template template) {
+        if (name.equals(template.getName())) {
+            LOGGER.info("Updating templates with id {} with {}", name, template);
+            templateService.update(template);
         }
     }
 
     @RequestMapping(value = "/{name}", method = DELETE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable(value = "name") String name) {
-        LOGGER.info("Deleting links with id {}", name);
-        linkService.delete(name);
+        LOGGER.info("Deleting templates with id {}", name);
+        templateService.delete(name);
     }
-    
-    @RequestMapping(method = GET)    
-    public List<Link> list() {
-        LOGGER.info("Getting Links ");
-        return linkService.list();
-    }
-    
-    @RequestMapping(value = "/childen_of/{name}",method = GET)    
-    public List<Link> listChildren(@PathVariable(value = "name") String name) {
-        LOGGER.info("Getting childen of Link {}",name);
-        return linkService.listChildren(name);
+
+    @RequestMapping(method = GET)
+    public List<Template> list() {
+        LOGGER.info("Getting Templates ");
+        return templateService.list();
     }
 }
