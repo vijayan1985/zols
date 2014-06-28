@@ -19,6 +19,11 @@ public class TemplateRepository {
 
     @Id
     private String name;
+
+    /**
+     * Label of the TemplateRepository.
+     */
+    private String label;
     private String description;
     private String type;
     private String path;
@@ -26,6 +31,14 @@ public class TemplateRepository {
     private String userName;
     private String password;
     private String rootFolder;
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
     public String getHost() {
         return host;

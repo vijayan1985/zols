@@ -11,12 +11,14 @@ import org.jodel.store.DataStore;
 import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.zols.templates.domain.Template;
 
 /**
  *
  * @author sathish_ku
  */
+@Service
 public class TemplateService {
     private static final Logger LOGGER = getLogger(TemplateService.class);
 
